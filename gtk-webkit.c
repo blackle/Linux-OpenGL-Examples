@@ -22,7 +22,9 @@ gboolean on_load_changed(WebKitWebView *web_view, WebKitLoadEvent load_event, Gt
 	return TRUE;
 }
 
-static char* html = "<style>html{cursor:none;overflow:hidden}body{transform:translateY(460px) rotate(20deg);font-family:FreeSans;font-size:150}</style>this is an html page! 😊<br><i style=\"font-size:50px;margin-left:100\">with webgl!</i>";
+static char html[] = {
+#include "index.html.inc"
+};
 
 void _start() { 
 	asm volatile("sub $8, %rsp\n");

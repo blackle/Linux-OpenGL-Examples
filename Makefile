@@ -10,7 +10,7 @@ shader.h : shader.frag Makefile
 	mono ./shader_minifier.exe --preserve-externals shader.frag -o shader.h
 
 # not using `pkg-config --libs` here because it will include too many libs
-gtk-webkit.elf : gtk-webkit.c Makefile
+gtk-webkit.elf : gtk-webkit.c index.html.inc Makefile
 	gcc -o $@ $< `pkg-config --cflags webkit2gtk-4.0` -lgobject-2.0 -lgtk-3 -lwebkit2gtk-4.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
 
 gtk-opengl.elf : gtk-opengl.c shader.h Makefile
@@ -28,6 +28,9 @@ gtk-opengl : gtk-opengl_opt.elf.packed
 xlib-opengl : xlib-opengl_opt.elf.packed
 	mv $< $@
 
+index.html.inc : index.html
+	cat index.html | xxd -i > index.html.inc
+	echo ", 0" >> index.html.inc
 
 #all the rest of these rules just takes a compiled elf file and generates a packed version of it with vondehi
 %_opt.elf : %.elf Makefile

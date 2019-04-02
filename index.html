@@ -1,0 +1,5 @@
+<style>*{margin:0px;padding:0px;overflow:hidden;}</style>
+<canvas id="webgl" width="1920" height="1080"></canvas>
+<script>
+function sP(r,e,t){var a=r.createProgram(),o=function(e,t){var o=r.createShader("vertex"==e?r.VERTEX_SHADER:r.FRAGMENT_SHADER);r.shaderSource(o,t),r.compileShader(o),r.attachShader(a,o)};return o("vertex",e),o("fragment",t),r.linkProgram(a),a}function atsf(r,e,t,a,o){r.bindBuffer(r.ARRAY_BUFFER,r.createBuffer()),r.bufferData(r.ARRAY_BUFFER,new Float32Array(o),r.STATIC_DRAW);var i=r.getAttribLocation(e,t);r.enableVertexAttribArray(i),r.vertexAttribPointer(i,a,r.FLOAT,!1,0,0)}function dr(){var r=document.getElementById("webgl").getContext("webgl"),e=sP(r,"attribute vec2 ps;void main(){gl_Position=vec4(ps,0.,1.);}","void main(){gl_FragColor=vec4(gl_FragCoord.x/1920.,0.5,1.,1.);}");r.useProgram(e),atsf(r,e,"ps",2,[-1,1,1,1,-1,-1,1,-1]),r.drawArrays(r.TRIANGLE_STRIP,0,4)}setTimeout(dr,10),dr();
+</script>
