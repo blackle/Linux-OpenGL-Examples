@@ -123,14 +123,6 @@ void _start() {
 	//switch to using our framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, fboA);
 
-	//clear it
-	// glClear(GL_COLOR_BUFFER_BIT);
-
-	//enable additive blending so we don't have to do so in the shader
-	glEnable(GL_BLEND);
-	// glBlendEquationSeparate( GL_FUNC_ADD, GL_FUNC_ADD);
-	glBlendFunc( GL_ONE , GL_ONE_MINUS_SRC_ALPHA);
-
 	// glFinish();
 	glRecti(-1,-1,1,1);
 
