@@ -1,17 +1,29 @@
 
-all : gtk-webkit
+all : gtk-webkit gtk-opengl
 
 .PHONY: clean
 
 packer : vondehi/vondehi.asm 
 	cd vondehi; nasm -fbin -o vondehi vondehi.asm
 
+shader.h : shader.frag Makefile
+	mono ./shader_minifier.exe --preserve-externals shader.frag -o shader.h
+
+# not using `pkg-config --libs` here because it will include too many libs
 gtk-webkit.elf : gtk-webkit.c Makefile
 	gcc -o $@ $< `pkg-config --cflags webkit2gtk-4.0` -lgobject-2.0 -lgtk-3 -lwebkit2gtk-4.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
+
+gtk-opengl.elf : gtk-opengl.c shader.h Makefile
+	gcc -o $@ $< `pkg-config --cflags gtk+-3.0` -lglib-2.0 -lGL -lgtk-3 -lgdk-3 -lgobject-2.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
 
 gtk-webkit : gtk-webkit_opt.elf.packed
 	mv $< $@
 
+gtk-opengl : gtk-opengl_opt.elf.packed
+	mv $< $@
+
+
+#all the rest of these rules just takes a compiled elf file and generates a packed version of it with vondehi
 %_opt.elf : %.elf Makefile
 	cp $< $@
 	strip $@
@@ -38,4 +50,4 @@ gtk-webkit : gtk-webkit_opt.elf.packed
 	wc -c $@
 
 clean :
-	-rm *.elf gtk-webkit
+	-rm *.elf shader.h gtk-webkit

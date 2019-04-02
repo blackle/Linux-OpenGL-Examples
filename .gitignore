@@ -1,0 +1,4 @@
+*.elf
+gtk-webkit
+gtk-opengl
+shader.h
