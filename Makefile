@@ -10,14 +10,14 @@ gtk-webkit.elf : gtk-webkit.c Makefile
 	gcc -o $@ $< `pkg-config --cflags webkit2gtk-4.0` -lgobject-2.0 -lgtk-3 -lwebkit2gtk-4.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
 
 gtk-webkit : gtk-webkit_opt.elf.packed
-	cp $< $@
+	mv $< $@
 
 %_opt.elf : %.elf Makefile
 	cp $< $@
 	strip $@
 	strip -R .note -R .comment -R .eh_frame -R .eh_frame_hdr -R .note.gnu.build-id -R .got -R .got.plt -R .gnu.version -R .rela.dyn -R .shstrtab $@
 	#remove section header
-	./section-stripper/section-stripper.py $@
+	./Section-Header-Stripper/section-stripper.py $@
 
 	#clear out useless bits
 	sed -i 's/_edata/\x00\x00\x00\x00\x00\x00/g' $@;
@@ -38,4 +38,4 @@ gtk-webkit : gtk-webkit_opt.elf.packed
 	wc -c $@
 
 clean :
-	rm *.xz *.elf *.packed gtk-webkit
+	-rm *.elf gtk-webkit
