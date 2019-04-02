@@ -14,7 +14,7 @@ gtk-webkit.elf : gtk-webkit.c index.html.inc Makefile
 	gcc -o $@ $< `pkg-config --cflags webkit2gtk-4.0` -lgobject-2.0 -lgtk-3 -lwebkit2gtk-4.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
 
 gtk-opengl.elf : gtk-opengl.c shader.h Makefile
-	gcc -o $@ $< `pkg-config --cflags gtk+-3.0` -lglib-2.0 -lGL -lgtk-3 -lgdk-3 -lgobject-2.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
+	gcc -o $@ $< `pkg-config --cflags gtk+-3.0` -lGL -lgtk-3 -lgdk-3 -lgobject-2.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
 
 xlib-opengl.elf : xlib-opengl.c shader.h Makefile
 	gcc -o $@ $<  -lX11 -lGL -lcairo -lXrandr -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib

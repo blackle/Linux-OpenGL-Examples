@@ -1,6 +1,5 @@
 #version 450
 
-uniform float iTime;
 out vec4 fragColor;
 
 void main()
@@ -10,5 +9,5 @@ void main()
     vec2 uv = (gl_FragCoord.xy/iResolution.xy)*2.0 - vec2(1.0,1.0);
     uv.y *= iResolution.y/iResolution.x;
 
-    fragColor = abs(uv.yxyx + sin(iTime)/2.0);
+    fragColor = abs(uv.yxyx);
 }

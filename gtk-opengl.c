@@ -22,17 +22,11 @@ static char* vshader = "#version 450\nvec2 y=vec2(1.,-1);\nvec4 x[4]={y.yyxx,y.x
 
 GLuint vao;
 GLuint p;
-GTimer* gtimer;
 
 static gboolean
 on_render (GtkGLArea *glarea, GdkGLContext *context)
 {
-	float itime = g_timer_elapsed(gtimer, NULL);
-
-	if (itime > 10.0) gtk_main_quit();
-
 	glUseProgram(p);
-  glUniform1f(0, itime);
 	glBindVertexArray(vao);
 	glVertexAttrib1f(0, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -106,15 +100,16 @@ static void on_realize(GtkGLArea *glarea)
 
 	glGenVertexArrays(1, &vao);
 
-	GdkGLContext *context = gtk_gl_area_get_context(glarea);
-	GdkWindow *glwindow = gdk_gl_context_get_window(context);
-	GdkFrameClock *frame_clock = gdk_window_get_frame_clock(glwindow);
+	// if you want to continuously render the shader once per frame
+	// GdkGLContext *context = gtk_gl_area_get_context(glarea);
+	// GdkWindow *glwindow = gdk_gl_context_get_window(context);
+	// GdkFrameClock *frame_clock = gdk_window_get_frame_clock(glwindow);
 
-	// Connect update signal:
-	g_signal_connect_swapped(frame_clock, "update", G_CALLBACK(gtk_gl_area_queue_render), glarea);
+	// // Connect update signal:
+	// g_signal_connect_swapped(frame_clock, "update", G_CALLBACK(gtk_gl_area_queue_render), glarea);
 
-	// Start updating:
-	gdk_frame_clock_begin_updating(frame_clock);
+	// // Start updating:
+	// gdk_frame_clock_begin_updating(frame_clock);
 }
 
 void _start() {
@@ -123,8 +118,6 @@ void _start() {
 	typedef void (*voidWithOneParam)(int*);
 	voidWithOneParam gtk_init_one_param = (voidWithOneParam)gtk_init;
 	(*gtk_init_one_param)(NULL);
-
-	gtimer = g_timer_new();
 
 	GtkWidget *win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	GtkWidget *glarea = gtk_gl_area_new();

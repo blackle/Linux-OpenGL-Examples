@@ -36,7 +36,7 @@ void _start() {
 	GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	WebKitSettings *webSettings = webkit_settings_new_with_settings("enable-webgl", TRUE, NULL);
 	WebKitWebView *webView = WEBKIT_WEB_VIEW(webkit_web_view_new_with_settings(webSettings));
-  webkit_web_view_load_html(webView, html, NULL);
+	webkit_web_view_load_html(webView, html, NULL);
 
 	gtk_container_add(GTK_CONTAINER(win), GTK_WIDGET(webView));
 
