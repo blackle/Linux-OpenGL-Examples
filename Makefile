@@ -1,5 +1,5 @@
 
-all : gtk-webkit gtk-opengl
+all : gtk-webkit gtk-opengl xlib-opengl
 
 .PHONY: clean
 
@@ -16,10 +16,16 @@ gtk-webkit.elf : gtk-webkit.c Makefile
 gtk-opengl.elf : gtk-opengl.c shader.h Makefile
 	gcc -o $@ $< `pkg-config --cflags gtk+-3.0` -lglib-2.0 -lGL -lgtk-3 -lgdk-3 -lgobject-2.0 -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
 
+xlib-opengl.elf : xlib-opengl.c shader.h Makefile
+	gcc -o $@ $<  -lX11 -lGL -lcairo -lXrandr -no-pie -fno-plt -Os -std=gnu11 -nostartfiles -nostdlib
+
 gtk-webkit : gtk-webkit_opt.elf.packed
 	mv $< $@
 
 gtk-opengl : gtk-opengl_opt.elf.packed
+	mv $< $@
+
+xlib-opengl : xlib-opengl_opt.elf.packed
 	mv $< $@
 
 
@@ -50,4 +56,4 @@ gtk-opengl : gtk-opengl_opt.elf.packed
 	wc -c $@
 
 clean :
-	-rm *.elf shader.h gtk-webkit
+	-rm *.elf shader.h gtk-webkit gtk-opengl xlib-opengl

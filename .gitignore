@@ -1,4 +1,5 @@
 *.elf
 gtk-webkit
 gtk-opengl
+xlib-opengl
 shader.h
