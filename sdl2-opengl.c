@@ -102,14 +102,9 @@ void _start() {
 				asm volatile(".att_syntax prefix");
 				__builtin_unreachable();
 			}
-			if (Event.type == SDL_WINDOWEVENT) {
-				switch(Event.window.event) {
-					case SDL_WINDOWEVENT_EXPOSED:
-						on_render();
-						SDL_GL_SwapWindow(mainwindow);
-					default:
-						break;
-				}
+			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_EXPOSED) {
+				on_render();
+				SDL_GL_SwapWindow(mainwindow);
 			}
 		}
 	}
