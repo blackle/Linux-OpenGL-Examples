@@ -2,4 +2,5 @@
 gtk-webkit
 gtk-opengl
 xlib-opengl
+sdl2-opengl
 shader.h

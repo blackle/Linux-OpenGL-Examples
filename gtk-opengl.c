@@ -14,7 +14,7 @@
 #include <GL/glext.h>
 
 #include "shader.h"
-static char* vshader = "#version 450\nvec2 y=vec2(1.,-1);\nvec4 x[4]={y.yyxx,y.xyxx,y.yxxx,y.xxxx};void main(){gl_Position=x[gl_VertexID];}";
+static char* vshader = "#version 450\nvec2 y=vec2(1.,-1);vec4 x[4]={y.yyxx,y.xyxx,y.yxxx,y.xxxx};void main(){gl_Position=x[gl_VertexID];}";
 
 #define CANVAS_WIDTH 1920
 #define CANVAS_HEIGHT 1080

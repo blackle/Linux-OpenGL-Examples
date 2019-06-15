@@ -1,15 +1,18 @@
 # Linux-OpenGL-Examples
 
-Some code examples for opening windows for various purposes in very few bytes. The examples mostly do the same thing, the only difference being gtk-webkit uses a different shader source, and is also heavily unoptimized.
+Here are examples of rendering a shader full screen on linux. All of these examples do it in less than 2 kilobytes thanks to vondehi and copious amounts of ELF stripping.
 
-## gtk-opengl - 1292 bytes
+There are three examples, each using a different library to open a window and get an opengl context.
 
-Example code for opening a glsl shader fullscreen with gtk. Closes with the standard ALT+F4 on Ubuntu. Renders the shader once on load.
+## xlib-opengl - 1503 bytes
 
-## gtk-webkit - 1482 bytes
+Vanilla xlib is the largest of the bunch and the most brittle. It is highly not recommended to use xlib in a demo unless you cannot assume these other libraries will be on the system.
 
-Example code for opening a webgl enabled html page fullscreen with gtk and webkit. Closes with the standard ALT+F4 on Ubuntu. WebGL is used to display a shader full screen with some very unoptimized javascript. Like gtk-opengl, the shader is rendered once. Optimizing the js for size will probably take off another 100 bytes or two.
+## gtk-opengl - 1396 bytes
 
-## xlib-opengl - 1474 bytes
+GTK is a step up from xlib, being both smaller and more robust. If the compo you are entering doesn't allow using SDL2, GTK is an ok alternative. Before switching to GCC 8.3.0, this was 100 bytes smaller than it is now. I am not sure why it is larger, but this likely means it can be sizecoded/stripped further.
 
-Example code for opening a glsl shader fullscreen with vanilla xlib. Like gtk-opengl and gtk-webkit, the shader is rendered once. Unlike gtk-opengl, the window must be closed with ESC. This code is based on the code for Cenotaph For Soda, a 4k gfx demo for Revision 2018. OPINION: xlib feels the most fragile of the bunch here...
+## sdl2-opengl - 1010 bytes
+
+Using SDL2 will give you very small binaries. Use SDL2 whenever you can, as it also has a few other useful subsystems at minimal cost (for example, audio.)
+
